@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input and Output Form</title>
+</head>
+<body>
+    <form id="myForm" action="/submit" method="post">
+        <label for="inputText">Input:</label>
+        <input type="text" id="inputText" name="inputText">
+        <button type="submit">Submit</button>
+    </form>
+
+    <div>
+        <label for="outputText">Output:</label>
+        <textarea id="outputText" readonly></textarea>
+    </div>
+
+    <script>
+        document.getElementById("myForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+            var formData = new FormData(event.target);
+
+            fetch('/submit', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("outputText").value = data;
+            });
+        });
+    </script>
+</body>
+</html>
